@@ -2,13 +2,15 @@ package com.porado.LogistiQ.backend.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import com.porado.LogistiQ.backend.model.User;
+import com.porado.LogistiQ.backend.repository.UserRepository;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -26,22 +28,31 @@ public class SecurityConfig {
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/**").authenticated() 
+                .requestMatchers("/api/auth/register").permitAll()
+                .requestMatchers("/api/**").authenticated()
                 .anyRequest().permitAll()
             )
             .httpBasic(Customizer.withDefaults());
-            
+
         return http.build();
     }
 
     @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails user = User.builder()
-            .username("admin")
-            .password("{noop}secret")
-            .roles("USER")
-            .build();
-        return new InMemoryUserDetailsManager(user);
+    public UserDetailsService userDetailsService(UserRepository userRepository) {
+        return username -> {
+            User user = userRepository.findByUsername(username)
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+            return org.springframework.security.core.userdetails.User
+                    .withUsername(user.getUsername())
+                    .password(user.getPassword())
+                    .roles(user.getRole())
+                    .build();
+        };
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean

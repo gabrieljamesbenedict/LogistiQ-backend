@@ -2,9 +2,7 @@ package com.porado.LogistiQ.backend.controller;
 
 import com.porado.LogistiQ.backend.model.Trip;
 import com.porado.LogistiQ.backend.repository.TripRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
@@ -20,5 +18,10 @@ public class TripController {
     @GetMapping
     public List<Trip> getAllTrips() {
         return tripRepository.findAll();
+    }
+
+    @PostMapping
+    public Trip createTrip(@RequestBody Trip trip) {
+        return tripRepository.save(trip);
     }
 }
