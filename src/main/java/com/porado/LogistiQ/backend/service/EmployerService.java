@@ -5,9 +5,9 @@ import com.porado.LogistiQ.backend.model.Employee;
 import java.util.List;
 
 public interface EmployerService {
-
-
-
-    Employee addDriver(Employee employee);
-    List<Employee> getAllDrivers();
+    Employee getEmployee(Long id);
+    List<Employee> getAllEmployees();
+    Employee createEmployee(Employee employee);
+    Employee updateEmployee(Employee employee);
+    void deleteEmployee(Employee employee);
 }

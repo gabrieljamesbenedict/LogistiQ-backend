@@ -2,8 +2,15 @@ package com.porado.LogistiQ.backend.service;
 
 import com.porado.LogistiQ.backend.model.User;
 
-public interface UserService {
+import java.util.List;
 
-    User registerUser(String username, String rawPassword, String role);
+public interface UserService {
+    User registerUser(String username, String password);
+
+    User getUser(Long id);
+    List<User> getAllUsers();
+    User createUser(User employee);
+    User updateUser(User employee);
+    void deleteUser(User employee);
 }
 
