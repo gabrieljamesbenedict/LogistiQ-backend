@@ -1,22 +1,41 @@
 package com.porado.LogistiQ.backend.model;
 
+import com.porado.LogistiQ.backend.util.TripStatus;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
+@Table(name = "trips")
 public class Trip {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    private LocalDateTime date;
+    private Long tripId;
+
+    @Column(nullable = false)
+    private TripStatus tripStatus;
+
+    @Column(nullable = false)
     private String origin;
+
+    @Column(nullable = false)
     private String destination;
-    private String status; 
-    private String driver;
-    private Double totalExpenses;
-    private Double totalProfit;
-    private String customerName;
+
+    @Column(nullable = false)
+    private Instant startedAt;
+
+    @Column(nullable = false)
+    private Instant endedAt;
+
+    @OneToMany
+    @JoinColumn(name = "employee_id")
+    private List<Employee> employeeLit;
+
+    @Column
+    private String cargoDescription;
 }
