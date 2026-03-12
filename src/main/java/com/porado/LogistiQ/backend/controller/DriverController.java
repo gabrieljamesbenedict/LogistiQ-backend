@@ -1,6 +1,6 @@
 package com.porado.LogistiQ.backend.controller;
 
-import com.porado.LogistiQ.backend.model.Driver;
+import com.porado.LogistiQ.backend.model.Employee;
 import com.porado.LogistiQ.backend.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +19,12 @@ public class DriverController {
     }
 
     @PostMapping("/add")
-    public Driver addDriver(@RequestBody Driver driver) {
-        return driverService.addDriver(driver);
+    public Employee addDriver(@RequestBody Employee employee) {
+        return driverService.addDriver(employee);
     }
 
     @GetMapping("/all")
-    public List<Driver> getAllDrivers() {
+    public List<Employee> getAllDrivers() {
         return driverService.getAllDrivers();
     }
 }

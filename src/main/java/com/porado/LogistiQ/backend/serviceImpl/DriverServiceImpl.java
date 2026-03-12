@@ -1,6 +1,6 @@
 package com.porado.LogistiQ.backend.serviceImpl;
 
-import com.porado.LogistiQ.backend.model.Driver;
+import com.porado.LogistiQ.backend.model.Employee;
 import com.porado.LogistiQ.backend.service.DriverService;
 import com.porado.LogistiQ.backend.repository.DriverRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +18,12 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
-    public Driver addDriver(Driver driver) {
-        return driverRepository.save(driver);
+    public Employee addDriver(Employee employee) {
+        return driverRepository.save(employee);
     }
 
     @Override
-    public List<Driver> getAllDrivers() {
+    public List<Employee> getAllDrivers() {
         return driverRepository.findAll();
     }
 }
