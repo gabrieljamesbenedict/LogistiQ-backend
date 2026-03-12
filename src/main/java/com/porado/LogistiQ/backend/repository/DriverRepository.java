@@ -1,4 +1,4 @@
-package main.java.com.porado.LogistiQ.backend.repository;
+package com.porado.LogistiQ.backend.repository;
 
 import com.porado.LogistiQ.backend.model.Driver;
 import org.springframework.data.jpa.repository.JpaRepository;

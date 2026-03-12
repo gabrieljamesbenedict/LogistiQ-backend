@@ -1,4 +1,4 @@
-package main.java.com.porado.LogistiQ.backend.controller;
+package com.porado.LogistiQ.backend.controller;
 
 import com.porado.LogistiQ.backend.model.Driver;
 import com.porado.LogistiQ.backend.service.DriverService;

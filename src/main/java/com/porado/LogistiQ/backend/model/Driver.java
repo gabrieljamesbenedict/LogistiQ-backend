@@ -1,4 +1,4 @@
-package main.java.com.porado.LogistiQ.backend.model;
+package com.porado.LogistiQ.backend.model;
 
 import jakarta.persistence.*;
 

@@ -1,6 +1,7 @@
-package main.java.com.porado.LogistiQ.backend.serviceImpl;
+package com.porado.LogistiQ.backend.serviceImpl;
 
 import com.porado.LogistiQ.backend.model.Driver;
+import com.porado.LogistiQ.backend.service.DriverService;
 import com.porado.LogistiQ.backend.repository.DriverRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,6 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     public Driver addDriver(Driver driver) {
-        // Here you could add business logic, like checking if the license is valid
         return driverRepository.save(driver);
     }
 
