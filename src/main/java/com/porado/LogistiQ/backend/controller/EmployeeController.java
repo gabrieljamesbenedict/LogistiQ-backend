@@ -1,7 +1,7 @@
 package com.porado.LogistiQ.backend.controller;
 
 import com.porado.LogistiQ.backend.model.Employee;
-import com.porado.LogistiQ.backend.service.DriverService;
+import com.porado.LogistiQ.backend.service.EmployerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -9,22 +9,22 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/drivers")
 @CrossOrigin(origins = "http://localhost:3000")
-public class DriverController {
+public class EmployeeController {
 
-    private final DriverService driverService;
+    private final EmployerService employerService;
 
     @Autowired
-    public DriverController(DriverService driverService) {
-        this.driverService = driverService;
+    public EmployeeController(EmployerService employerService) {
+        this.employerService = employerService;
     }
 
     @PostMapping("/add")
     public Employee addDriver(@RequestBody Employee employee) {
-        return driverService.addDriver(employee);
+        return employerService.addDriver(employee);
     }
 
     @GetMapping("/all")
     public List<Employee> getAllDrivers() {
-        return driverService.getAllDrivers();
+        return employerService.getAllDrivers();
     }
 }

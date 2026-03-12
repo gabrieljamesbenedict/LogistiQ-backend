@@ -4,7 +4,10 @@ import com.porado.LogistiQ.backend.model.Employee;
 
 import java.util.List;
 
-public interface DriverService {
+public interface EmployerService {
+
+
+
     Employee addDriver(Employee employee);
     List<Employee> getAllDrivers();
 }
