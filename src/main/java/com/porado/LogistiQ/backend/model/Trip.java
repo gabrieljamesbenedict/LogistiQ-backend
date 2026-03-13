@@ -17,6 +17,7 @@ public class Trip {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tripId;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TripStatus tripStatus;
 
