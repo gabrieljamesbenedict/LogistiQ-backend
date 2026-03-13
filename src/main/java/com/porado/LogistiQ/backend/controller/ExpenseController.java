@@ -45,6 +45,11 @@ public class ExpenseController {
         expenseService.deleteExpense(expense);
     }
 
+    @GetMapping
+    public ResponseEntity<List<Expense>> getExpenseByTrip(@RequestBody Trip trip) {
+        return ResponseEntity.ok(expenseService.getByTrip(trip));
+    }
+
 //    @GetMapping
 //    public List<Expense> getAllExpenses() {
 //        return expenseService.get();

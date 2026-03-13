@@ -47,4 +47,9 @@ public class ExpenseServiceImpl implements ExpenseService {
         Expense e = getExpense(expense.getExpenseId());
         expenseRepository.delete(e);
     }
+
+    @Override
+    public List<Expense> getByTrip(Trip trip) {
+        return expenseRepository.findByTrip(trip);
+    }
 }
