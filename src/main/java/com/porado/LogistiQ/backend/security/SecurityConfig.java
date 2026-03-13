@@ -7,6 +7,7 @@ import com.porado.LogistiQ.backend.repository.UserRepository;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,31 +26,48 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/register").permitAll()
-                .requestMatchers("/api/**").authenticated()
-                .anyRequest().permitAll()
-            )
-            .httpBasic(Customizer.withDefaults());
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(auth -> auth
+//                        .requestMatchers("/api/auth/register").permitAll()
+//                        .requestMatchers("/api/**").authenticated()
+                        .anyRequest().permitAll()
+                )
+                .httpBasic(Customizer.withDefaults());
 
         return http.build();
     }
 
-    @Bean
-    public UserDetailsService userDetailsService(UserRepository userRepository) {
-        return username -> {
-            User user = userRepository.findByUsername(username)
-                    .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-            return org.springframework.security.core.userdetails.User
-                    .withUsername(user.getUsername())
-                    .password(user.getPassword())
-                    .roles(user.getRole())
-                    .build();
-        };
-    }
-
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        http
+//            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+//            .csrf(csrf -> csrf.disable())
+//            .authorizeHttpRequests(auth -> auth
+//                .requestMatchers("/api/auth/register").permitAll()
+//                .requestMatchers("/api/**").authenticated()
+//                .anyRequest().permitAll()
+//            )
+//            .httpBasic(Customizer.withDefaults());
+//
+//        return http.build();
+//    }
+//
+//    @Bean
+//    public UserDetailsService userDetailsService(UserRepository userRepository) {
+//        return username -> {
+//            User user = userRepository
+//                    .findByUsername(username)
+//                    .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+//
+//            return org.springframework.security.core.userdetails.User
+//                    .withUsername(user.getUsername())
+//                    .password(user.getPassword())
+//                    .roles(String.valueOf(user.getRole()))
+//                    .build();
+//        };
+//    }
+//
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(12);
@@ -60,10 +78,8 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("http://localhost:3000")); 
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        
         configuration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
-        configuration.setAllowCredentials(true); 
-        
+        configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration); 
         return source;
