@@ -30,13 +30,20 @@ public class Trip {
     @Column(nullable = false)
     private Instant startedAt;
 
-    @Column(nullable = false)
+    @Column
     private Instant endedAt;
 
-    @OneToMany
-    @JoinColumn(name = "employeeId")
-    private List<Employee> employeeId;
+    @ManyToMany
+    @JoinTable(
+            name = "trip_employees",
+            joinColumns = @JoinColumn(name = "trip_id"),
+            inverseJoinColumns = @JoinColumn(name = "employee_id")
+    )
+    private List<Employee> employeeList;
 
     @Column
     private String cargoDescription;
+
+    @Column
+    private Double revenue;
 }
