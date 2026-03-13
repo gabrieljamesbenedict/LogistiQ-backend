@@ -18,7 +18,7 @@ import java.util.List;
 public class ExpenseController {
 
     private final ExpenseService expenseService;
-//    private final TripService tripService;
+    private final TripService tripService;
 
     @GetMapping("/{id}")
     public ResponseEntity<Expense> getExpense(@PathVariable Long id) {
@@ -43,6 +43,12 @@ public class ExpenseController {
     @DeleteMapping
     public void deleteExpense(@RequestBody Expense expense) {
         expenseService.deleteExpense(expense);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Expense>> getExpenseByTrip(@RequestParam(name = "tripId") Long tripId) {
+        Trip trip = tripService.getTrip(tripId);
+        return ResponseEntity.ok(expenseService.getByTrip(trip));
     }
 
 //    @GetMapping
