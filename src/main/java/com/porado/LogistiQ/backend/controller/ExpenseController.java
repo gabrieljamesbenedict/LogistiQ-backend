@@ -26,7 +26,13 @@ public class ExpenseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Expense>> getAllExpenses() {
+    public ResponseEntity<List<Expense>> getExpenses(@RequestParam(required = false) Long tripId) {
+
+        if (tripId != null) {
+            Trip trip = tripService.getTrip(tripId);
+            return ResponseEntity.ok(expenseService.getByTrip(trip));
+        }
+
         return ResponseEntity.ok(expenseService.getAllExpenses());
     }
 
@@ -45,11 +51,11 @@ public class ExpenseController {
         expenseService.deleteExpense(expense);
     }
 
-    @GetMapping
-    public ResponseEntity<List<Expense>> getExpenseByTrip(@RequestParam(name = "tripId") Long tripId) {
-        Trip trip = tripService.getTrip(tripId);
-        return ResponseEntity.ok(expenseService.getByTrip(trip));
-    }
+//    @GetMapping
+//    public ResponseEntity<List<Expense>> getExpenseByTrip(@RequestParam(name = "tripId") Long tripId) {
+//        Trip trip = tripService.getTrip(tripId);
+//        return ResponseEntity.ok(expenseService.getByTrip(trip));
+//    }
 
 //    @GetMapping
 //    public List<Expense> getAllExpenses() {
