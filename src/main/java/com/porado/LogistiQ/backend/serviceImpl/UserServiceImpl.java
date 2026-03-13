@@ -1,5 +1,6 @@
 package com.porado.LogistiQ.backend.serviceImpl;
 
+import com.porado.LogistiQ.backend.dto.RegisterRequest;
 import com.porado.LogistiQ.backend.model.Employee;
 import com.porado.LogistiQ.backend.model.User;
 import com.porado.LogistiQ.backend.repository.UserRepository;
@@ -21,7 +22,10 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public User registerUser(String username, String password) {
+    public User registerUser(RegisterRequest registerRequest) {
+        String username = registerRequest.username();
+        String password = registerRequest.password();
+
         if (userRepository.existsByUsername(username)) {
             throw new IllegalArgumentException("Username already exists");
         }
