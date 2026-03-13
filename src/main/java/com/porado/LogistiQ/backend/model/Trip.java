@@ -33,8 +33,8 @@ public class Trip {
     private Instant endedAt;
 
     @OneToMany
-    @JoinColumn(name = "employee_id")
-    private List<Employee> employeeLit;
+    @JoinColumn(name = "employeeId")
+    private List<Employee> employeeId;
 
     @Column
     private String cargoDescription;

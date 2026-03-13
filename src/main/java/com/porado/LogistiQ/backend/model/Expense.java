@@ -25,7 +25,7 @@ public class Expense {
     private ExpenseCategory category;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "trip_id")
+    @JoinColumn(name = "tripId")
     private Trip trip;
 
 }
